@@ -1,28 +1,29 @@
+import { qs, qsa } from './dom.js';
+
 const initHamburgerMenu = () => {
-  const toggle = document.querySelector('.nav-toggle');
-  const mobileNav = document.querySelector('.mobile-nav');
-  const mobileLinks = mobileNav?.querySelectorAll('a');
+  const toggle = qs('.nav-toggle');
+  const mobileNav = qs('.mobile-nav');
+  const mobileLinks = mobileNav ? qsa('a', mobileNav) : [];
 
   if (!toggle || !mobileNav) return;
 
+  const setMenu = (open) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.classList.toggle('open', open);
+    mobileNav.classList.toggle('open', open);
+  };
+
   toggle.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    toggle.classList.toggle('open');
-    mobileNav.classList.toggle('open');
+    setMenu(toggle.getAttribute('aria-expanded') !== 'true');
   });
 
-  mobileLinks?.forEach((link) => {
-    link.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      mobileNav.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => setMenu(false));
   });
 };
 
 const initScrollReveal = () => {
-  const revealItems = document.querySelectorAll('[data-reveal]');
+  const revealItems = qsa('[data-reveal]');
   if (!revealItems.length) return;
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -37,11 +38,11 @@ const initScrollReveal = () => {
 };
 
 const initSmoothAnchors = () => {
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  qsa('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const targetId = link.getAttribute('href');
       if (targetId === '#' || targetId === '#top') return;
-      const target = document.querySelector(targetId);
+      const target = qs(targetId);
       if (!target) return;
 
       event.preventDefault();
@@ -51,15 +52,11 @@ const initSmoothAnchors = () => {
 };
 
 const initHeaderScroll = () => {
-  const header = document.querySelector('.site-header');
+  const header = qs('.site-header');
   if (!header) return;
 
   const onScroll = () => {
-    if (window.scrollY > 24) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
+    header.classList.toggle('scrolled', window.scrollY > 24);
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -67,11 +64,11 @@ const initHeaderScroll = () => {
 };
 
 const initServiceCarousel = () => {
-  const wrapper = document.querySelector('.service__cards');
-  const track = wrapper?.querySelector('.service__track');
+  const wrapper = qs('.service__cards');
+  const track = wrapper ? qs('.service__track', wrapper) : null;
   const cards = track ? Array.from(track.children) : [];
-  const prevButton = document.querySelector('.service__nav--prev');
-  const nextButton = document.querySelector('.service__nav--next');
+  const prevButton = qs('.service__nav--prev');
+  const nextButton = qs('.service__nav--next');
   let activeIndex = 1;
 
   if (!wrapper || !track || cards.length === 0 || !prevButton || !nextButton) return;
