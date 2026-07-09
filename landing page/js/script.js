@@ -25,6 +25,13 @@ const initScrollReveal = () => {
   const revealItems = document.querySelectorAll('[data-reveal]');
   if (!revealItems.length) return;
 
+  const revealAll = () => revealItems.forEach((item) => item.classList.add('is-visible'));
+
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    return;
+  }
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -41,7 +48,14 @@ const initSmoothAnchors = () => {
     link.addEventListener('click', (event) => {
       const targetId = link.getAttribute('href');
       if (targetId === '#' || targetId === '#top') return;
-      const target = document.querySelector(targetId);
+
+      let target = null;
+      try {
+        target = document.querySelector(targetId);
+      } catch (error) {
+        console.warn(`Smooth scroll skipped for invalid anchor "${targetId}"`, error);
+        return;
+      }
       if (!target) return;
 
       event.preventDefault();
@@ -72,9 +86,10 @@ const initServiceCarousel = () => {
   const cards = track ? Array.from(track.children) : [];
   const prevButton = document.querySelector('.service__nav--prev');
   const nextButton = document.querySelector('.service__nav--next');
-  let activeIndex = 1;
 
   if (!wrapper || !track || cards.length === 0 || !prevButton || !nextButton) return;
+
+  let activeIndex = Math.min(1, cards.length - 1);
 
   const updateCarousel = () => {
     cards.forEach((card, index) => {
@@ -103,11 +118,21 @@ const initServiceCarousel = () => {
 };
 
 const initSite = () => {
-  initHamburgerMenu();
-  initHeaderScroll();
-  initServiceCarousel();
-  initScrollReveal();
-  initSmoothAnchors();
+  const features = [
+    initHamburgerMenu,
+    initHeaderScroll,
+    initServiceCarousel,
+    initScrollReveal,
+    initSmoothAnchors,
+  ];
+
+  features.forEach((init) => {
+    try {
+      init();
+    } catch (error) {
+      console.error(`Failed to initialise ${init.name || 'site feature'}`, error);
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', initSite);
