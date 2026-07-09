@@ -20,6 +20,8 @@
   --speed-medium: 320ms;
   --speed-long: 600ms;
   --ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: var(--speed-fast) var(--ease-out-smooth);
+  --transition-medium: var(--speed-medium) var(--ease-out-smooth);
   --shadow-soft: 0 26px 60px rgba(34, 48, 63, 0.12);
 }
 
@@ -75,7 +77,7 @@ button {
   z-index: 20;
   background: rgba(249, 241, 230, 0.92);
   backdrop-filter: blur(16px);
-  transition: transform var(--speed-medium) var(--ease-out-smooth), box-shadow var(--speed-medium) var(--ease-out-smooth), padding var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), padding var(--transition-medium);
 }
 
 .site-header.scrolled {
@@ -111,12 +113,17 @@ button {
   display: none;
 }
 
-.site-nav__links {
-  display: flex;
-  gap: 1.5rem;
+.site-nav__links,
+.mobile-nav__links,
+.footer-nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.site-nav__links {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .site-nav__links a {
@@ -134,7 +141,7 @@ button {
   background: var(--color-soft);
   color: var(--color-slate);
   font-weight: 700;
-  transition: transform var(--speed-fast) var(--ease-out-smooth), background var(--speed-fast) var(--ease-out-smooth);
+  transition: transform var(--transition-fast), background var(--transition-fast);
 }
 
 .header__phone:hover,
@@ -157,7 +164,7 @@ button {
   height: 2px;
   background: var(--color-slate);
   border-radius: 99px;
-  transition: transform var(--speed-medium) var(--ease-out-smooth), opacity var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium), opacity var(--transition-medium);
 }
 
 .nav-toggle span:nth-child(1) {
@@ -190,7 +197,7 @@ button {
   visibility: hidden;
   opacity: 0;
   transform: translateY(-8%);
-  transition: opacity var(--speed-medium) var(--ease-out-smooth), transform var(--speed-medium) var(--ease-out-smooth), visibility 0s linear var(--speed-medium);
+  transition: opacity var(--transition-medium), transform var(--transition-medium), visibility 0s linear var(--speed-medium);
   background: rgba(249, 241, 230, 0.98);
   z-index: 18;
 }
@@ -210,9 +217,6 @@ button {
 }
 
 .mobile-nav__links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
   gap: 1.2rem;
 }
@@ -347,7 +351,7 @@ button {
   background: var(--color-surface);
   color: var(--color-slate);
   box-shadow: 0 24px 50px rgba(34, 48, 63, 0.08);
-  transition: transform var(--speed-medium) var(--ease-out-smooth), box-shadow var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .hero__pill:hover {
@@ -485,7 +489,7 @@ button {
   background: linear-gradient(120deg, rgba(234, 191, 123, 0.5), rgba(255,230,190,0.65));
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium);
   z-index: -1;
 }
 
@@ -546,7 +550,7 @@ button {
   place-items: center;
   font-size: 1.15rem;
   color: var(--color-slate);
-  transition: transform var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium);
 }
 
 .service__nav:hover {
@@ -560,7 +564,7 @@ button {
 .service__track {
   display: flex;
   gap: 1rem;
-  transition: transform var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium);
 }
 
 .service-card {
@@ -570,7 +574,7 @@ button {
   padding: 1.5rem;
   box-shadow: 0 22px 40px rgba(34, 48, 63, 0.08);
   flex: 0 0 auto;
-  transition: transform var(--speed-medium) var(--ease-out-smooth), opacity var(--speed-medium) var(--ease-out-smooth), box-shadow var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium), opacity var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .service-card--active {
@@ -621,7 +625,7 @@ button {
   padding: 0.95rem 1.4rem;
   border-radius: var(--radius-pill);
   font-weight: 700;
-  transition: transform var(--speed-fast) var(--ease-out-smooth), background var(--speed-medium) var(--ease-out-smooth), box-shadow var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-fast), background var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .button:hover {
@@ -684,7 +688,7 @@ button {
   border-radius: 30px;
   background: rgba(249, 241, 230, 0.96);
   box-shadow: 0 16px 38px rgba(34, 48, 63, 0.08);
-  transition: transform var(--speed-medium) var(--ease-out-smooth), box-shadow var(--speed-medium) var(--ease-out-smooth);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .blog-row:hover {
@@ -786,9 +790,6 @@ button {
 }
 
 .footer-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
   gap: 0.75rem;
 }
@@ -806,7 +807,7 @@ button {
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity var(--speed-medium) var(--ease-out-smooth), transform var(--speed-medium) var(--ease-out-smooth);
+  transition: opacity var(--transition-medium), transform var(--transition-medium);
 }
 
 .js [data-reveal].is-visible {

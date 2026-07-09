@@ -1,7 +1,9 @@
+import { qs, qsa } from './dom.js';
+
 const initHamburgerMenu = () => {
-  const toggle = document.querySelector('.nav-toggle');
-  const mobileNav = document.querySelector('.mobile-nav');
-  const mobileLinks = mobileNav?.querySelectorAll('a');
+  const toggle = qs('.nav-toggle');
+  const mobileNav = qs('.mobile-nav');
+  const mobileLinks = mobileNav ? qsa('a', mobileNav) : [];
 
   if (!toggle || !mobileNav) return;
 
@@ -30,8 +32,15 @@ const initHamburgerMenu = () => {
 };
 
 const initScrollReveal = () => {
-  const revealItems = document.querySelectorAll('[data-reveal]');
+  const revealItems = qsa('[data-reveal]');
   if (!revealItems.length) return;
+
+  const revealAll = () => revealItems.forEach((item) => item.classList.add('is-visible'));
+
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    return;
+  }
 
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
@@ -45,11 +54,11 @@ const initScrollReveal = () => {
 };
 
 const initSmoothAnchors = () => {
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  qsa('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const targetId = link.getAttribute('href');
       if (targetId === '#' || targetId === '#top') return;
-      const target = document.querySelector(targetId);
+      const target = qs(targetId);
       if (!target) return;
 
       event.preventDefault();
@@ -59,15 +68,11 @@ const initSmoothAnchors = () => {
 };
 
 const initHeaderScroll = () => {
-  const header = document.querySelector('.site-header');
+  const header = qs('.site-header');
   if (!header) return;
 
   const onScroll = () => {
-    if (window.scrollY > 24) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
+    header.classList.toggle('scrolled', window.scrollY > 24);
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -75,8 +80,8 @@ const initHeaderScroll = () => {
 };
 
 const initServiceCarousel = () => {
-  const wrapper = document.querySelector('.service__cards');
-  const track = wrapper?.querySelector('.service__track');
+  const wrapper = qs('.service__cards');
+  const track = wrapper ? qs('.service__track', wrapper) : null;
   const cards = track ? Array.from(track.children) : [];
   const prevButton = document.querySelector('.service__nav--prev');
   const nextButton = document.querySelector('.service__nav--next');
@@ -113,11 +118,32 @@ const initServiceCarousel = () => {
 };
 
 const initSite = () => {
-  initHamburgerMenu();
-  initHeaderScroll();
-  initServiceCarousel();
-  initScrollReveal();
-  initSmoothAnchors();
+  const features = [
+    initHamburgerMenu,
+    initHeaderScroll,
+    initServiceCarousel,
+    initScrollReveal,
+    initSmoothAnchors,
+  ];
+
+  features.forEach((init) => {
+    try {
+      init();
+    } catch (error) {
+      console.error(`Failed to initialise ${init.name || 'site feature'}`, error);
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', initSite);
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    initHamburgerMenu,
+    initScrollReveal,
+    initSmoothAnchors,
+    initHeaderScroll,
+    initServiceCarousel,
+    initSite,
+  };
+}
