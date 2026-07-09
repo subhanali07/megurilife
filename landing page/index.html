@@ -2,11 +2,12 @@
   WP CONVERSION MAP (for Phase 2):
   header.php       -> header section
   template-parts/hero.php
-  template-parts/map.php
+  template-parts/village.php   (ごみと資源ずかん / おしごとずかん)
   template-parts/statement.php
   template-parts/service.php   (ACF repeater: service_cards)
   template-parts/recruit.php
   template-parts/blog.php      (WP_Query: latest 3 posts)
+  template-parts/gallery.php
   footer.php       -> footer section
 -->
 <!DOCTYPE html>
@@ -15,28 +16,29 @@
   <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NISHIMATSU | 地域のしあわせにつながるごみと資源のまちづくり</title>
+  <title>NISHIMATSU | 地域のしあわせにつながる、ごみと資源のまちづくり</title>
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
   <div class="page-shell">
     <!-- ==== HEADER SECTION ==== -->
-    <header class="site-header" data-reveal>
+    <header class="site-header">
       <div class="site-header__inner">
-        <a class="brand" href="#top" data-field="brand-name">
-          <span class="brand__mark">西松</span>
-          <span class="brand__wordmark">NISHIMATSU</span>
+        <a class="brand" href="#top" data-field="brand-name" aria-label="NISHIMATSU">
+          <span class="brand__pill">NISHIMATSU</span>
         </a>
 
         <nav class="site-nav" aria-label="Primary navigation">
           <ul class="site-nav__links">
-            <li><a href="#map">ごみと資源図鑑</a></li>
-            <li><a href="#service">西松の仕事図鑑</a></li>
-            <li><a href="#statement">西松について</a></li>
+            <li><a href="#statement">会社紹介</a></li>
+            <li><a href="#service">事業紹介</a></li>
+            <li><a href="#map">ごみと資源ずかん</a></li>
+            <li><a href="#map">おしごとずかん</a></li>
+            <li><a href="#recruit">採用情報</a></li>
+            <li><a href="#blog">お知らせ</a></li>
+            <li><a href="#footer">お問い合わせ</a></li>
           </ul>
         </nav>
-
-        <a class="header__phone pill" href="tel:0120-345-678">0120-345-678</a>
 
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" type="button">
           <span></span>
@@ -47,14 +49,16 @@
 
       <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav__inner">
-          <a class="mobile-nav__phone pill" href="tel:0120-345-678">0120-345-678</a>
           <ul class="mobile-nav__links">
-            <li><a href="#map">ごみと資源図鑑</a></li>
-            <li><a href="#service">西松の仕事図鑑</a></li>
-            <li><a href="#statement">西松について</a></li>
+            <li><a href="#statement">会社紹介</a></li>
+            <li><a href="#service">事業紹介</a></li>
+            <li><a href="#map">ごみと資源ずかん</a></li>
+            <li><a href="#map">おしごとずかん</a></li>
             <li><a href="#recruit">採用情報</a></li>
-            <li><a href="#blog">ブログ</a></li>
+            <li><a href="#blog">お知らせ</a></li>
+            <li><a href="#footer">お問い合わせ</a></li>
           </ul>
+          <a class="mobile-nav__phone" href="tel:0957-82-8720">0957-82-8720</a>
         </div>
       </div>
     </header>
@@ -63,231 +67,283 @@
     <main>
       <!-- ==== HERO SECTION ==== -->
       <section class="hero" id="top">
-        <div class="hero__bg" aria-hidden="true"></div>
-        <div class="hero__overlay"></div>
+        <div class="hero__photo" aria-hidden="true"></div>
+        <div class="hero__sky" aria-hidden="true"></div>
 
-        <div class="hero__art hero__art--plane" aria-hidden="true"></div>
-        <div class="hero__art hero__art--bird" aria-hidden="true"></div>
-        <div class="hero__art hero__art--dot" aria-hidden="true"></div>
+        <img class="hero__cloud hero__cloud--1" src="assets/illust/cloud1.png" alt="" aria-hidden="true">
+        <img class="hero__cloud hero__cloud--2" src="assets/illust/cloud2.png" alt="" aria-hidden="true">
+        <img class="hero__cloud hero__cloud--3" src="assets/illust/cloud3.png" alt="" aria-hidden="true">
+        <img class="hero__bird hero__bird--1" src="assets/illust/bird.png" alt="" aria-hidden="true">
+        <img class="hero__bird hero__bird--2" src="assets/illust/bird.png" alt="" aria-hidden="true">
 
-        <div class="hero__content" data-reveal>
-          <div class="hero__eyebrow">地域とつながる、おしごとのかたち</div>
+        <div class="hero__mountain" aria-hidden="true">
+          <img src="assets/illust/mountain.png" alt="">
+        </div>
+
+        <div class="hero__content">
+          <p class="hero__eyebrow">地域とつながる、おしごとのかたち</p>
           <h1 class="hero__title" data-field="hero-title">
             めぐりめぐって<br>
             地域のしあわせに、<br>
             つながる仕事。
           </h1>
-
-          <div class="hero__buttons">
-            <a class="hero__pill" href="#map">
-              <span>ごみと資源図鑑</span>
-              <small>見る >></small>
-            </a>
-            <a class="hero__pill" href="#service">
-              <span>西松の仕事図鑑</span>
-              <small>見る >></small>
-            </a>
-            <a class="hero__pill" href="#statement">
-              <span>西松について</span>
-              <small>見る >></small>
-            </a>
-          </div>
         </div>
       </section>
       <!-- ==== END HERO SECTION ==== -->
 
-      <!-- ==== MAP SECTION ==== -->
-      <section class="section section--map" id="map" data-reveal>
-        <div class="section__eyebrow">地域の暮らしを見守る</div>
-        <div class="section__headline">小さなまちと大きな循環を<br>やさしくつなぐイメージ。</div>
+      <!-- ==== VILLAGE / ZUKAN SECTION ==== -->
+      <section class="village" id="map">
+        <div class="village__scene" aria-hidden="true">
+          <img class="village__art village__art--truck1" src="assets/illust/truck-packer.png" alt="">
+          <img class="village__art village__art--truck2" src="assets/illust/truck-packer-r.png" alt="">
+          <img class="village__art village__art--house1" src="assets/illust/house1.png" alt="">
+          <img class="village__art village__art--house2" src="assets/illust/house2.png" alt="">
+          <img class="village__art village__art--tree1" src="assets/illust/tree1.png" alt="">
+          <img class="village__art village__art--tree2" src="assets/illust/tree2.png" alt="">
+          <img class="village__art village__art--waterfall" src="assets/illust/waterfall.png" alt="">
+          <img class="village__art village__art--person1" src="assets/illust/person-bags.png" alt="">
+          <img class="village__art village__art--person2" src="assets/illust/girl-wave.png" alt="">
+          <img class="village__art village__art--dog" src="assets/illust/dog.png" alt="">
+        </div>
 
-        <div class="map-block">
-          <div class="map-block__visual">
-            <img src="assets/Links/_A717626.jpg" alt="イラスト風のまちの地図" loading="lazy">
-            <div class="map-block__pulse map-block__pulse--truck" aria-hidden="true"></div>
-            <div class="map-block__pulse map-block__pulse--tree" aria-hidden="true"></div>
-          </div>
+        <div class="village__books" data-reveal>
+          <article class="zukan zukan--gomi" data-field="resource-book">
+            <p class="zukan__bubble">身近なことだからこそ知っておきたい！</p>
+            <a class="zukan__link" href="#map">
+              <img class="zukan__cover" src="assets/illust/book-gomi.png" alt="南島原市のごみと資源ずかん">
+              <span class="miru-badge">ごみと資源<br>ずかん<small>見る &raquo;</small></span>
+            </a>
+          </article>
 
-          <div class="map-block__cards">
-            <article class="map-card" data-field="resource-book">
-              <p class="map-card__callout">身近なことだからこそ知っておきたい！</p>
-              <div class="map-card__cover">
-                <img src="assets/Links/_A717633.jpg" alt="南島原市のごみと資源ずかんの表紙" loading="lazy">
-              </div>
-              <h3>南島原市のごみと資源ずかん</h3>
-            </article>
+          <article class="zukan zukan--oshigoto" data-field="work-book">
+            <p class="zukan__bubble">わたしたちのこと、もっと知ってほしい！</p>
+            <a class="zukan__link" href="#map">
+              <img class="zukan__cover" src="assets/illust/book-oshigoto.png" alt="西松のおしごとずかん">
+              <span class="miru-badge">西松の<br>仕事ずかん<small>見る &raquo;</small></span>
+            </a>
+          </article>
+        </div>
 
-            <article class="map-card" data-field="work-book">
-              <p class="map-card__callout">わたしたちのこと、もっと知ってほしい！</p>
-              <div class="map-card__cover">
-                <img src="assets/Links/_A717635.jpg" alt="西松のおしごとずかんの表紙" loading="lazy">
-              </div>
-              <h3>西松のおしごとずかん</h3>
-            </article>
-          </div>
+        <a class="miru-badge miru-badge--float" href="#statement">西松に<br>ついて<small>見る &raquo;</small></a>
+      </section>
+      <!-- ==== END VILLAGE SECTION ==== -->
+
+      <!-- ==== VIDEO / RIVER BAND ==== -->
+      <section class="riverband" aria-label="西松の現場">
+        <a class="riverband__video" href="#" data-reveal>
+          <img src="assets/Links/_A717626.jpg" alt="橋を渡る西松のバキューム車" loading="lazy">
+          <span class="riverband__play"><span>&#9658;</span>動画</span>
+        </a>
+        <div class="riverband__water" aria-hidden="true">
+          <img class="riverband__art riverband__art--ferry" src="assets/illust/ferry.png" alt="">
+          <img class="riverband__art riverband__art--dolphin1" src="assets/illust/dolphin1.png" alt="">
+          <img class="riverband__art riverband__art--dolphin2" src="assets/illust/dolphin2.png" alt="">
+          <img class="riverband__art riverband__art--dolphin3" src="assets/illust/dolphin3.png" alt="">
+          <img class="riverband__art riverband__art--shrimp" src="assets/illust/shrimp1.png" alt="">
         </div>
       </section>
-      <!-- ==== END MAP SECTION ==== -->
+      <!-- ==== END VIDEO / RIVER BAND ==== -->
 
       <!-- ==== STATEMENT SECTION ==== -->
       <section class="section section--statement" id="statement" data-reveal>
-        <div class="statement__headline">
-          <span>地域の未来を</span>
-          <span>見えないところで</span>
-          <span>あかるく照らしている。</span>
-        </div>
+        <div class="statement__grid">
+          <div class="statement__text">
+            <h2 class="statement__headline">
+              <span>地域の未来を</span>
+              <span>見えないところで</span>
+              <span>あかるく照らしている。</span>
+            </h2>
+            <div class="statement__copy">
+              <p>地域から出たごみや廃棄物は、すてることで終わりではなく、そこから先があります。正しく処理されてはじめて、地域の環境と衛生的でゆたかなくらしが守られるのです。</p>
+              <p>わたしたち西松の仕事は、ごみや廃棄物を回収して、運んで、適正に処理をすること。その積み重ねが、社会のサイクルを支え、地域の環境を守ることに、直接つながっています。</p>
+              <p>ずっと受け継いでいきたい、南島原の美しい自然も、ゆたかなくらしも、持続可能な未来も。ごみや廃棄物の適正な処理を通じて、めぐりめぐって、未来に希望をつないでいきます。</p>
+            </div>
+          </div>
 
-        <div class="statement__copy">
-          <p>私たちはごみと資源の循環を通じて、暮らしの安心を育てています。きめ細かな作業と地域との対話を大切に、毎日を支える仕事を続けています。</p>
-          <p>海と山に囲まれたこの土地では、ひとつひとつの毎日が循環の一部。西松はその風景にそっと寄りそう役割を果たします。</p>
-          <p>あなたのまちでも、ひろがっていく笑顔と未来へ。わたしたちができることを、もっと伝えていきます。</p>
-        </div>
-
-        <div class="statement__visual statement__visual--with-text" aria-hidden="true">
-          <img src="assets/Links/_A717819.jpg" alt="柔らかい有機的な背景イメージ" loading="lazy">
-          <div class="statement__visual-text">わたしたちのこと、もっと知ってほしい</div>
+          <div class="statement__photos">
+            <figure class="statement__photo statement__photo--a">
+              <img src="assets/Links/_A718113.jpg" alt="ごみを回収する西松のスタッフ" loading="lazy">
+            </figure>
+            <figure class="statement__photo statement__photo--b">
+              <img src="assets/Links/_A717755.jpg" alt="海沿いの道を走る収集車" loading="lazy">
+            </figure>
+            <figure class="statement__photo statement__photo--c">
+              <img src="assets/Links/_A717635.jpg" alt="南島原ののどかな道" loading="lazy">
+            </figure>
+          </div>
         </div>
       </section>
       <!-- ==== END STATEMENT SECTION ==== -->
 
       <!-- ==== SERVICE SECTION ==== -->
       <section class="section section--service" id="service" data-reveal>
-        <div class="section__meta">SERVICE</div>
-        <h2 class="section__title">地域の循環をつくる、三つのサービス。</h2>
-        <p class="section__subtitle">あたたかく、信頼できる仕事を届けるための、しごとづくり。</p>
+        <img class="service__truck" src="assets/illust/truck-packer.png" alt="" aria-hidden="true">
+        <p class="section__meta section__meta--outline">SERVICE</p>
+        <p class="section__lead">廃棄物のことで困ったら、まずはご相談ください！</p>
 
         <div class="service__carousel">
-          <button class="service__nav service__nav--prev" type="button" aria-label="Previous service">←</button>
+          <button class="service__nav service__nav--prev" type="button" aria-label="Previous service">&lsaquo;</button>
           <div class="service__cards" role="region" aria-label="Service carousel">
             <div class="service__track">
-              <article class="service-card service-card--active" data-index="0">
-                <span class="service-card__label">収集と運搬</span>
+              <article class="service-card" data-index="0">
+                <span class="service-card__label">粗大ごみ回収</span>
                 <div class="service-card__image">
-                  <img src="assets/Links/_A717605.jpg" alt="収集車のサービスイメージ" loading="lazy">
+                  <img src="assets/Links/_A718082.jpg" alt="粗大ごみ回収のイメージ" loading="lazy">
                 </div>
-                <h3>ごみ収集から資源運搬まで</h3>
-                <p>毎日のまちのリズムを支える、丁寧で安全な収集・運搬サービスです。</p>
-                <a class="button button--ghost" href="#">もっとくわしく</a>
+                <p class="service-card__text">引っ越し、断捨離、実家の整理など、不要な家具や家電をお片付けします。</p>
+                <a class="button button--ghost" href="#">もっとくわしく &raquo;</a>
               </article>
 
-              <article class="service-card" data-index="1">
-                <span class="service-card__label">資源リサイクル</span>
+              <article class="service-card service-card--active" data-index="1">
+                <span class="service-card__label">環境インフラ維持事業</span>
                 <div class="service-card__image">
-                  <img src="assets/Links/_A717626.jpg" alt="資源回収のサービスイメージ" loading="lazy">
+                  <img src="assets/Links/_A718019.jpg" alt="グリストラップ清掃のイメージ" loading="lazy">
                 </div>
-                <h3>資源を新たな価値につなげる</h3>
-                <p>分別とリサイクルの仕組みで、地域の資源が次のくらしに還るようにします。</p>
-                <a class="button button--primary" href="#">もっとくわしく</a>
+                <p class="service-card__text">飲食店や厨房の排水処理装置グリストラップの清掃は、プロにお任せください。</p>
+                <a class="button button--ghost" href="#">もっとくわしく &raquo;</a>
               </article>
 
               <article class="service-card" data-index="2">
-                <span class="service-card__label">環境サポート</span>
+                <span class="service-card__label">浄化槽管理</span>
                 <div class="service-card__image">
-                  <img src="assets/Links/_A717633.jpg" alt="環境サポートのサービスイメージ" loading="lazy">
+                  <img src="assets/Links/_A717918.jpg" alt="浄化槽管理のイメージ" loading="lazy">
                 </div>
-                <h3>地域の環境を守る取り組み</h3>
-                <p>まちの未来を見据えた提案で、環境負荷をやさしく減らしていきます。</p>
-                <a class="button button--ghost" href="#">もっとくわしく</a>
+                <p class="service-card__text">浄化槽の定期的な保守点検や、浄化槽の機能を保つための清掃を行っています。</p>
+                <a class="button button--ghost" href="#">もっとくわしく &raquo;</a>
+              </article>
+
+              <article class="service-card" data-index="3">
+                <span class="service-card__label">事業所ごみ・産業廃棄物回収</span>
+                <div class="service-card__image">
+                  <img src="assets/Links/_A717837.jpg" alt="産業廃棄物回収のイメージ" loading="lazy">
+                </div>
+                <p class="service-card__text">事業所から出るごみや産業廃棄物を、法令に沿って適正に回収・処理します。</p>
+                <a class="button button--ghost" href="#">もっとくわしく &raquo;</a>
               </article>
             </div>
           </div>
-          <button class="service__nav service__nav--next" type="button" aria-label="Next service">→</button>
+          <button class="service__nav service__nav--next" type="button" aria-label="Next service">&rsaquo;</button>
         </div>
       </section>
       <!-- ==== END SERVICE SECTION ==== -->
 
       <!-- ==== RECRUIT SECTION ==== -->
       <section class="section section--recruit" id="recruit" data-reveal>
+        <span class="recruit__watermark" aria-hidden="true">BRIGHTEN FUTURES TOGETHER</span>
+        <img class="recruit__truck" src="assets/illust/truck-packer.png" alt="" aria-hidden="true">
+        <img class="recruit__bird" src="assets/illust/bird.png" alt="" aria-hidden="true">
+
         <div class="recruit__inner">
-          <div>
-            <p class="section__meta">RECRUIT</p>
-            <h2 class="section__title">いっしょにまちを支える仲間を募集中。</h2>
-            <p class="section__subtitle">チームでつくる、持続可能な地域づくり。未経験でも安心のサポート体制です。</p>
+          <figure class="recruit__photo">
+            <img src="assets/Links/_A718100.jpg" alt="現場で働く西松のスタッフ" loading="lazy">
+          </figure>
+
+          <div class="recruit__body">
+            <p class="section__meta section__meta--outline">RECRUIT</p>
+            <h2 class="recruit__title">地域のあかるい未来を、<br>いっしょに照らしませんか。</h2>
+            <p class="recruit__lead">西松の仕事は、南島原のくらしに密接に関わり、事業者を支え、地域にとって無くてはならないエッセンシャルワーカーです。先進の技術を駆使した取り組みにもちからを入れていますので、気になる方はまずはお問合せください。</p>
+            <a class="button button--outline button--pill" href="#">採用情報をみる &raquo;</a>
           </div>
-          <a class="button button--primary button--pill" href="#">採用情報をみる</a>
         </div>
       </section>
       <!-- ==== END RECRUIT SECTION ==== -->
 
       <!-- ==== BLOG SECTION ==== -->
       <section class="section section--blog" id="blog" data-reveal>
-        <div class="section__header">
-          <div>
-            <p class="section__meta">BLOG</p>
-            <h2 class="section__title">まちのこと、資源のこと、日々の気づき。</h2>
+        <img class="blog__trees" src="assets/illust/tree2.png" alt="" aria-hidden="true">
+        <div class="blog__grid">
+          <div class="blog__intro">
+            <p class="section__meta section__meta--outline">BLOG</p>
+            <p class="blog__lead">西松の日々のこと、仕事のこと、<br>ごみの豆知識など、発信しています。</p>
+            <a class="button button--outline button--pill" href="#">ブログ一覧をみる &raquo;</a>
           </div>
-          <a class="button button--ghost button--small" href="#">ブログ一覧をみる</a>
-        </div>
 
-        <div class="blog-list">
-          <article class="blog-row">
-            <span class="blog-row__tag">資源の知恵</span>
-            <time class="blog-row__date">2026.07.01</time>
-            <h3>リサイクルの仕組み、島でどう育つ？</h3>
-            <p>南島原市の暮らしに根ざした資源の活用と、身近でできる循環のヒントをご紹介。</p>
-          </article>
-
-          <article class="blog-row">
-            <span class="blog-row__tag">現場から</span>
-            <time class="blog-row__date">2026.06.22</time>
-            <h3>毎朝の収集で見える、まちの「その先」</h3>
-            <p>西松のスタッフが感じる仕事のやりがいと、地域とのつながりの大切さ。</p>
-          </article>
-
-          <article class="blog-row">
-            <span class="blog-row__tag">お知らせ</span>
-            <time class="blog-row__date">2026.06.10</time>
-            <h3>夏のごみ分別キャンペーンがはじまります</h3>
-            <p>暑い季節も地域の循環を支える、簡単で続けやすい分別のコツ。</p>
-          </article>
+          <div class="blog__cards">
+            <article class="blog-card">
+              <div class="blog-card__image"><img src="assets/Links/_A718031.jpg" alt="" loading="lazy"></div>
+              <div class="blog-card__meta"><time>2026.00.00</time><span class="blog-card__tag">お知らせ</span></div>
+              <h3>ブログタイトルが入ります。</h3>
+            </article>
+            <article class="blog-card">
+              <div class="blog-card__image"><img src="assets/Links/_A718031.jpg" alt="" loading="lazy"></div>
+              <div class="blog-card__meta"><time>2026.00.00</time><span class="blog-card__tag">お知らせ</span></div>
+              <h3>ブログタイトルが入ります。</h3>
+            </article>
+            <article class="blog-card">
+              <div class="blog-card__image"><img src="assets/Links/_A718031.jpg" alt="" loading="lazy"></div>
+              <div class="blog-card__meta"><time>2026.00.00</time><span class="blog-card__tag">お知らせ</span></div>
+              <h3>ブログタイトルが入ります。</h3>
+            </article>
+          </div>
         </div>
       </section>
       <!-- ==== END BLOG SECTION ==== -->
+
+      <!-- ==== GALLERY SECTION ==== -->
+      <section class="gallery" aria-label="西松のしごとギャラリー" data-reveal>
+        <figure><img src="assets/Links/_A717633.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A718113.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717695.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717918.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717762.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717992.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717626.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/Links/_A717837.jpg" alt="" loading="lazy"></figure>
+      </section>
+      <!-- ==== END GALLERY SECTION ==== -->
     </main>
 
     <!-- ==== FOOTER SECTION ==== -->
-    <footer class="site-footer" data-reveal>
-      <div class="site-footer__top">
-        <div class="footer-brand">
-          <span class="brand__mark">西松</span>
-          <span class="brand__wordmark">NISHIMATSU</span>
-          <address>〒855-0000 長崎県南島原市丸尾町1234<br>営業時間 8:00〜18:00</address>
-        </div>
+    <footer class="site-footer" id="footer">
+      <div class="footer-scene" aria-hidden="true">
+        <img class="footer-scene__art footer-scene__hills" src="assets/illust/hills.png" alt="">
+        <img class="footer-scene__art footer-scene__statue" src="assets/illust/statue.png" alt="">
+        <img class="footer-scene__art footer-scene__house1" src="assets/illust/house1.png" alt="">
+        <img class="footer-scene__art footer-scene__house2" src="assets/illust/house2.png" alt="">
+        <img class="footer-scene__art footer-scene__tree" src="assets/illust/tree2.png" alt="">
+        <img class="footer-scene__art footer-scene__ferry" src="assets/illust/ferry.png" alt="">
+        <img class="footer-scene__art footer-scene__dolphin" src="assets/illust/dolphin1.png" alt="">
+        <img class="footer-scene__art footer-scene__truck" src="assets/illust/truck-packer.png" alt="">
+        <img class="footer-scene__art footer-scene__cloud" src="assets/illust/cloud2.png" alt="">
+      </div>
 
-        <div class="footer-actions">
-          <a class="button button--primary button--pill" href="tel:0120-345-678">0120-345-678</a>
+      <div class="site-footer__body">
+        <div class="footer-brand">
+          <span class="brand__pill brand__pill--footer">NISHIMATSU</span>
+          <p class="footer-brand__name">株式会社 西松</p>
+          <address>長崎県南島原市西有家町須川108番地1</address>
+          <a class="footer-phone" href="tel:0957-82-8720">
+            <span class="footer-phone__icon">&#9742;</span>0957-82-8720
+          </a>
+          <p class="footer-phone__note">お電話受付時間：8:00-17:00　定休日：土日祝日 / 年末年始</p>
           <div class="social-links" aria-label="Social links">
-            <a href="#" aria-label="Twitter" class="social-link social-link--twitter"></a>
-            <a href="#" aria-label="Instagram" class="social-link social-link--instagram"></a>
+            <a href="#" class="social-link social-link--line" aria-label="LINE">LINE</a>
+            <a href="#" class="social-link social-link--instagram" aria-label="Instagram"></a>
           </div>
         </div>
-      </div>
 
-      <div class="site-footer__navs">
-        <div class="footer-nav">
-          <h3>サービス</h3>
-          <ul>
-            <li><a href="#service">収集と運搬</a></li>
-            <li><a href="#service">資源リサイクル</a></li>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <ul class="footer-nav__col">
+            <li><a href="#top">TOP</a></li>
+            <li><a href="#statement">会社紹介</a></li>
+            <li><a href="#map">ごみと資源ずかん</a></li>
+            <li><a href="#map">おしごとずかん</a></li>
           </ul>
-        </div>
-        <div class="footer-nav">
-          <h3>会社情報</h3>
-          <ul>
-            <li><a href="#statement">西松について</a></li>
+          <ul class="footer-nav__col">
+            <li class="footer-nav__head">事業紹介</li>
+            <li><a href="#service">環境インフラ維持事業</a></li>
+            <li><a href="#service">浄化槽管理</a></li>
+            <li><a href="#service">事業所ごみ・産業廃棄物回収</a></li>
+            <li><a href="#service">粗大ごみ回収</a></li>
+          </ul>
+          <ul class="footer-nav__col">
             <li><a href="#recruit">採用情報</a></li>
+            <li><a href="#blog">お知らせ</a></li>
           </ul>
-        </div>
-        <div class="footer-nav">
-          <h3>サポート</h3>
-          <ul>
-            <li><a href="#map">ごみと資源図鑑</a></li>
-            <li><a href="#blog">ブログ</a></li>
-          </ul>
-        </div>
+        </nav>
       </div>
 
-      <div class="site-footer__copy">© 2026 NISHIMATSU. All Rights Reserved.</div>
+      <div class="site-footer__copy">Copyright &copy; nishimatsu All Rights Reserved. Protected</div>
     </footer>
     <!-- ==== END FOOTER SECTION ==== -->
   </div>
