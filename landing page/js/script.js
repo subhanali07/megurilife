@@ -26,6 +26,13 @@ const initScrollReveal = () => {
   const revealItems = qsa('[data-reveal]');
   if (!revealItems.length) return;
 
+  const revealAll = () => revealItems.forEach((item) => item.classList.add('is-visible'));
+
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    return;
+  }
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -73,6 +80,8 @@ const initServiceCarousel = () => {
 
   if (!wrapper || !track || cards.length === 0 || !prevButton || !nextButton) return;
 
+  let activeIndex = Math.min(1, cards.length - 1);
+
   const updateCarousel = () => {
     cards.forEach((card, index) => {
       card.classList.toggle('service-card--active', index === activeIndex);
@@ -100,11 +109,32 @@ const initServiceCarousel = () => {
 };
 
 const initSite = () => {
-  initHamburgerMenu();
-  initHeaderScroll();
-  initServiceCarousel();
-  initScrollReveal();
-  initSmoothAnchors();
+  const features = [
+    initHamburgerMenu,
+    initHeaderScroll,
+    initServiceCarousel,
+    initScrollReveal,
+    initSmoothAnchors,
+  ];
+
+  features.forEach((init) => {
+    try {
+      init();
+    } catch (error) {
+      console.error(`Failed to initialise ${init.name || 'site feature'}`, error);
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', initSite);
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    initHamburgerMenu,
+    initScrollReveal,
+    initSmoothAnchors,
+    initHeaderScroll,
+    initServiceCarousel,
+    initSite,
+  };
+}
