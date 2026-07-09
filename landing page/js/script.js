@@ -136,3 +136,14 @@ const initSite = () => {
 };
 
 document.addEventListener('DOMContentLoaded', initSite);
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    initHamburgerMenu,
+    initScrollReveal,
+    initSmoothAnchors,
+    initHeaderScroll,
+    initServiceCarousel,
+    initSite,
+  };
+}
