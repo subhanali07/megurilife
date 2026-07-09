@@ -809,7 +809,7 @@ button {
   transition: opacity var(--speed-medium) var(--ease-out-smooth), transform var(--speed-medium) var(--ease-out-smooth);
 }
 
-.is-visible {
+.js [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
 }
