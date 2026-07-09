@@ -5,19 +5,27 @@ const initHamburgerMenu = () => {
 
   if (!toggle || !mobileNav) return;
 
+  const setMenu = (open) => {
+    toggle.classList.toggle('open', open);
+    mobileNav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    mobileNav.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
   toggle.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    toggle.classList.toggle('open');
-    mobileNav.classList.toggle('open');
+    setMenu(!mobileNav.classList.contains('open'));
   });
 
   mobileLinks?.forEach((link) => {
-    link.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      mobileNav.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileNav.classList.contains('open')) {
+      setMenu(false);
+      toggle.focus();
+    }
   });
 };
 
@@ -72,9 +80,11 @@ const initServiceCarousel = () => {
   const cards = track ? Array.from(track.children) : [];
   const prevButton = document.querySelector('.service__nav--prev');
   const nextButton = document.querySelector('.service__nav--next');
-  let activeIndex = 1;
 
   if (!wrapper || !track || cards.length === 0 || !prevButton || !nextButton) return;
+
+  const initialActive = cards.findIndex((card) => card.classList.contains('service-card--active'));
+  let activeIndex = initialActive === -1 ? 0 : initialActive;
 
   const updateCarousel = () => {
     cards.forEach((card, index) => {

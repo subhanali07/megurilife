@@ -803,7 +803,7 @@ button {
   font-size: 0.95rem;
 }
 
-[data-reveal] {
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity var(--speed-medium) var(--ease-out-smooth), transform var(--speed-medium) var(--ease-out-smooth);

@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NISHIMATSU | 地域のしあわせにつながるごみと資源のまちづくり</title>
@@ -37,14 +38,14 @@
 
         <a class="header__phone pill" href="tel:0120-345-678">0120-345-678</a>
 
-        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" type="button">
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
 
-      <div class="mobile-nav" aria-hidden="true">
+      <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav__inner">
           <a class="mobile-nav__phone pill" href="tel:0120-345-678">0120-345-678</a>
           <ul class="mobile-nav__links">
