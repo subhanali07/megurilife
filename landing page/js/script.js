@@ -1,27 +1,34 @@
-import { qs, qsa } from './dom.js';
+/* ==========================================================
+   NISHIMATSU — script.js
+   Plain classic script (no ES modules) so it also runs fine
+   when the file is opened directly via file:// during local
+   testing, not just from a dev server. qs/qsa below replace
+   the old dom.js import.
+   ========================================================== */
 
-const initHamburgerMenu = () => {
-  const toggle = qs('.nav-toggle');
-  const mobileNav = qs('.mobile-nav');
-  const mobileLinks = mobileNav ? qsa('a', mobileNav) : [];
+function qs(selector, root) { return (root || document).querySelector(selector); }
+function qsa(selector, root) { return Array.from((root || document).querySelectorAll(selector)); }
 
+/* ---------- Hamburger / mobile nav dropdown ---------- */
+function initHamburgerMenu() {
+  const toggle = qs('#nav-toggle');
+  const mobileNav = qs('#mobile-nav');
   if (!toggle || !mobileNav) return;
 
-  const setMenu = (open) => {
+  const links = qsa('a', mobileNav);
+
+  function setMenu(open) {
     toggle.classList.toggle('open', open);
     mobileNav.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    mobileNav.setAttribute('aria-hidden', String(!open));
     document.body.style.overflow = open ? 'hidden' : '';
-  };
+  }
 
   toggle.addEventListener('click', () => {
     setMenu(!mobileNav.classList.contains('open'));
   });
 
-  mobileLinks?.forEach((link) => {
-    link.addEventListener('click', () => setMenu(false));
-  });
+  links.forEach(link => link.addEventListener('click', () => setMenu(false)));
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && mobileNav.classList.contains('open')) {
@@ -29,95 +36,125 @@ const initHamburgerMenu = () => {
       toggle.focus();
     }
   });
-};
 
-const initScrollReveal = () => {
-  const revealItems = qsa('[data-reveal]');
-  if (!revealItems.length) return;
+  // If the viewport is resized past the mobile breakpoint while open, close it
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth >= 1080 && mobileNav.classList.contains('open')) {
+        setMenu(false);
+      }
+    }, 120);
+  });
+}
 
-  const revealAll = () => revealItems.forEach((item) => item.classList.add('is-visible'));
+/* ---------- Scroll reveal (single observer, reused everywhere) ---------- */
+function initScrollReveal() {
+  const items = qsa('[data-reveal]');
+  if (!items.length) return;
 
   if (!('IntersectionObserver' in window)) {
-    revealAll();
+    items.forEach(item => item.classList.add('is-visible'));
     return;
   }
 
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      obs.unobserve(entry.target);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-  revealItems.forEach((item) => observer.observe(item));
-};
+  items.forEach(item => observer.observe(item));
+}
 
-const initSmoothAnchors = () => {
-  qsa('a[href^="#"]').forEach((link) => {
+/* ---------- Smooth in-page anchor scrolling ---------- */
+function initSmoothAnchors() {
+  qsa('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (event) => {
       const targetId = link.getAttribute('href');
-      if (targetId === '#' || targetId === '#top') return;
+      if (!targetId || targetId === '#') return;
       const target = qs(targetId);
       if (!target) return;
-
       event.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
-};
+}
 
-const initHeaderScroll = () => {
-  const header = qs('.site-header');
+/* ---------- Header shadow on scroll ---------- */
+function initHeaderScroll() {
+  const header = qs('#site-header');
   if (!header) return;
 
-  const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > 24);
-  };
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-};
+}
 
-const initServiceCarousel = () => {
-  const wrapper = qs('.service__cards');
-  const track = wrapper ? qs('.service__track', wrapper) : null;
-  const cards = track ? Array.from(track.children) : [];
-  const prevButton = document.querySelector('.service__nav--prev');
-  const nextButton = document.querySelector('.service__nav--next');
+/* ---------- Service carousel ----------
+   Transform-based (not native scroll) so the active card can grow,
+   side cards can shrink/dim, and any card — including the first
+   and last — can be centered precisely in the viewport. */
+function initServiceCarousel() {
+  const track = qs('.service__track');
+  const prevBtn = qs('.service__nav--prev');
+  const nextBtn = qs('.service__nav--next');
+  if (!track || !prevBtn || !nextBtn) return;
 
-  if (!wrapper || !track || cards.length === 0 || !prevButton || !nextButton) return;
+  const cards = qsa('.service-card', track);
+  if (!cards.length) return;
 
-  const initialActive = cards.findIndex((card) => card.classList.contains('service-card--active'));
-  let activeIndex = initialActive === -1 ? 0 : initialActive;
+  let activeIndex = cards.findIndex(card => card.classList.contains('service-card--active'));
+  if (activeIndex === -1) activeIndex = 0;
 
-  const updateCarousel = () => {
-    cards.forEach((card, index) => {
-      card.classList.toggle('service-card--active', index === activeIndex);
+  function render() {
+    cards.forEach((card, idx) => {
+      card.classList.toggle('service-card--active', idx === activeIndex);
     });
 
-    const activeCard = cards[activeIndex];
-    const wrapperWidth = wrapper.clientWidth;
-    const cardWidth = activeCard.clientWidth;
-    const offset = Math.max(0, Math.min(activeCard.offsetLeft - (wrapperWidth - cardWidth) / 2, track.scrollWidth - wrapperWidth));
-    track.style.transform = `translateX(${-offset}px)`;
-  };
+    // Wait a frame so the active card's new (larger) width is applied
+    // before we measure offsets — otherwise centering math uses stale sizes.
+    requestAnimationFrame(() => {
+      const viewport = track.parentElement;
+      if (!viewport) return;
+      const activeCard = cards[activeIndex];
+      const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
+      const viewportCenter = viewport.offsetWidth / 2;
+      const maxOffset = Math.max(0, track.scrollWidth - viewport.offsetWidth);
+      const rawOffset = cardCenter - viewportCenter;
+      const offset = Math.min(Math.max(rawOffset, 0), maxOffset);
+      track.style.transform = `translateX(-${offset}px)`;
+    });
+  }
 
-  prevButton.addEventListener('click', () => {
-    activeIndex = (activeIndex + cards.length - 1) % cards.length;
-    updateCarousel();
+  prevBtn.addEventListener('click', () => {
+    activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+    render();
   });
 
-  nextButton.addEventListener('click', () => {
+  nextBtn.addEventListener('click', () => {
     activeIndex = (activeIndex + 1) % cards.length;
-    updateCarousel();
+    render();
   });
 
-  window.addEventListener('resize', () => window.requestAnimationFrame(updateCarousel));
-  updateCarousel();
-};
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(render, 150);
+  });
 
-const initSite = () => {
+  render();
+}
+
+/* ---------- Init everything ---------- */
+function initSite() {
   const features = [
     initHamburgerMenu,
     initHeaderScroll,
@@ -126,24 +163,13 @@ const initSite = () => {
     initSmoothAnchors,
   ];
 
-  features.forEach((init) => {
+  features.forEach((fn) => {
     try {
-      init();
+      fn();
     } catch (error) {
-      console.error(`Failed to initialise ${init.name || 'site feature'}`, error);
+      console.error(`Failed to initialise ${fn.name || 'a site feature'}`, error);
     }
   });
-};
+}
 
 document.addEventListener('DOMContentLoaded', initSite);
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    initHamburgerMenu,
-    initScrollReveal,
-    initSmoothAnchors,
-    initHeaderScroll,
-    initServiceCarousel,
-    initSite,
-  };
-}
