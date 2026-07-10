@@ -1,0 +1,22 @@
+[33m073ce67[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m commit
+[33m08a0108[m commit
+[33m66d4eb0[m commit
+[33m200ff42[m .
+[33m7ca5db5[m[33m ([m[1;31morigin/devin/1783614042-design-rebuild[m[33m, [m[1;32mdevin/1783614042-design-rebuild[m[33m)[m commi
+[33m83b2832[m commit
+[33m122bade[m Merge branch 'master' into devin/1783614042-design-rebuild
+[33m42095e5[m commit
+[33m9b540a6[m Merge branch 'master' into devin/1783614042-design-rebuild
+[33mf45b8a0[m Merge pull request #4 from subhanali07/devin/1783612255-review-fixes
+[33me63ea27[m[33m ([m[1;31morigin/devin/1783612255-review-fixes[m[33m)[m Merge branch 'master' into devin/1783612255-review-fixes
+[33m475bc7c[m Merge pull request #3 from subhanali07/devin/1783612245-refactor-shared-utils
+[33m71e1af7[m[33m ([m[1;31morigin/devin/1783612245-refactor-shared-utils[m[33m)[m Merge branch 'master' into devin/1783612245-refactor-shared-utils
+[33m0aa47d8[m Merge pull request #2 from subhanali07/devin/1783612186-add-unit-tests
+[33m1e885cf[m Merge pull request #1 from subhanali07/devin/1783612136-error-handling
+[33m26063d6[m Rebuild landing page to match design comps with illustration assets and smooth animations
+[33m91d9928[m Fix reveal specificity so is-visible overrides hidden state
+[33md9df79c[m Fix JS-dependent blank page, mobile-nav a11y, and carousel init
+[33m3c4ff18[m Refactor duplicated patterns into shared utilities
+[33m0659976[m[33m ([m[1;31morigin/devin/1783612186-add-unit-tests[m[33m)[m Add Jest unit tests for landing page script.js
+[33m4c7096b[m[33m ([m[1;31morigin/devin/1783612136-error-handling[m[33m)[m Improve error handling in landing page script
+[33ma54e06a[m initialized project and sorted things
