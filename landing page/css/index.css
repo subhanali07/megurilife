@@ -529,12 +529,18 @@ a:focus-visible, button:focus-visible {
 .book-right { bottom: 6%; left: 36%; transition-delay: 0.2s; }
 
 /* Scale everything down gracefully on narrower screens instead of hiding it */
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .bubble-left   { top: 38%; left: 4%; }
   .bubble-center { top: 30%; left: 34%; }
   .bubble-right  { top: 30%; right: 6%; }
   .book-left  { left: 2%; }
   .book-right { left: 34%; }
+  .hero__mountain{
+    padding-top:20px
+  }
+  .village{
+    margin-top:5px
+  }
 }
 
 /* ========================================================
@@ -744,6 +750,7 @@ a:focus-visible, button:focus-visible {
     animation-duration: 10s, 1.2s;
 
   }
+
 }
 
 .imgforstatement, .imgforstatement2{
