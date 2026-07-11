@@ -399,6 +399,20 @@ a:focus-visible, button:focus-visible {
   color: var(--color-ink);
   text-shadow: 0 2px 24px rgba(255, 255, 255, 0.85);
 }
+.hero__title .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0) rotate(-10deg);
+  white-space: pre;
+  
+  /* MAIN REVEAL ANIMATION (Exactly as you had it) */
+  animation: 
+    doodlePop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    gentleFloat 3s ease-in-out infinite;
+    
+  /* The floating starts 3.4 seconds later (after the final letter pops) */
+  animation-delay: 0s, 3.4s;
+}
 .hero__title span {
   opacity: 0;
   transform: translateY(20px);
@@ -632,7 +646,7 @@ a:focus-visible, button:focus-visible {
   transform: translateX(-8px);
   border-radius: 6px;
 }
-.statement__copy { display: grid; gap: 0.4rem; color: var(--color-muted); margin-bottom: 2rem; }
+.statement__copy { display: grid; gap: 0.4rem; color: var(--color-muted); margin-bottom: 2rem; z-index: 5; }
 .statement__photos { display: grid; gap: 1rem; }
 .statement__photo img {
   width: 100%;
@@ -640,12 +654,138 @@ a:focus-visible, button:focus-visible {
   box-shadow: var(--shadow-card);
   transition: transform var(--speed-medium) var(--ease-out-smooth);
 }
-.statement__photo img:hover { transform: scale(1.02); }
+.statement__photo img:hover { transform: scale(1.04) var(--ease-out-smooth);}
 
 @media (min-width: 720px) {
   .statement__photos { grid-template-columns: 1fr 1fr; }
   .statement__photo--a { grid-column: span 2; }
 }
+.bold_bluetext, .stmttext{
+  position: relative;
+  display: inline-block;
+}
+/* ========================================================
+   DESKTOP BACKGROUND PATH & ASSETS ROUTING
+   ======================================================== */
+
+/* Anchor point for all structural absolute children */
+.statement__content {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Make sure copy text wraps above the background layer */
+.statement__headline,
+.statement__copy p {
+  position: relative;
+  z-index: 9;
+}
+
+/* Winding Road Background Vector */
+.stmtimg {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -45%);
+  width: 90%;          /* Controls the spread area across text */
+  max-width: 650px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Vacuum Truck Asset sitting at the bottom of the road loop */
+.stmtimg2 {
+  position: absolute;
+  transform-origin: bottom center; 
+  bottom: 36rem;         /* Anchors from the bottom edge of content wrapper */
+  left: 37rem;           /* Aligns directly on the lower turn of the vector line */
+  transform: translate(-50%, 0);
+  width: 100px;        /* Crisp desktop rendering width */
+  height: auto;
+  z-index: 1;          /* Appears nicely next to the text graphics */
+  pointer-events: none;
+     animation: engineStart 2s ease-in-out infinite; 
+}
+.girlrunning{
+  position: absolute;
+  width: 60px;
+  top:24rem;
+  left:22rem;
+}
+.treestatement, .treestatement2{
+  width:40px;
+  bottom:30rem;
+  
+}
+.treestatement2{
+  left:20px
+}
+@media (min-width: 1024px) {
+  .girlrunning{
+    top: 15rem;
+  }
+
+}
+
+
+/* ========================================================
+   RESPONSIVE SCALING (MOBILE ADAPTATION)
+   ======================================================== */
+@media (max-width: 768px) {
+  /* Diminish background clutter on smaller smartphone viewports */
+  .stmtimg {
+    width: 100%;
+  }
+  .stmtimg2 {
+    width: 90px;
+    bottom: 20rem;
+    left:30rem;
+    animation-duration: 10s, 1.2s;
+
+  }
+}
+
+.imgforstatement, .imgforstatement2{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Perfectly centers vertically */
+  width: 70px;                 /* Desktop width */
+  height: auto;
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+.imgforstatement{
+  left:-80px;
+}
+.imgforstatement2{
+  animation-delay: 0.5s;
+  right:-90px;
+  
+}
+@media (max-width: 768px) {
+  /* Option A: Scale down and pull closer so they fit on mobile screens */
+  .imgforstatement, 
+  .imgforstatement2 {
+    width: 65px;               /* Smaller size for mobile */
+  }
+
+  .imgforstatement {
+    left: -125px;               /* Pull it closer to the text */
+  }
+
+  .imgforstatement2 {
+    right: -125px;              /* Pull it closer to the text */
+  }
+  
+  /* Option B: If the screen is too narrow, hide them entirely to prevent horizontal scrolling */
+  /*
+  .icon-left, .icon-right {
+    display: none;
+  }
+  */
+}
+
+
 
 /* ========================================================
    SERVICE
@@ -1357,4 +1497,99 @@ a:focus-visible, button:focus-visible {
 @keyframes stmtEngine {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-1.5px); }
+}
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(-50%); /* Starting point (centered vertically) */
+  }
+  50% {
+    transform: translateY(-65%); /* Moves slightly upward (adjust for higher float) */
+  }
+  100% {
+    transform: translateY(-50%); /* Returns smoothly to the starting point */
+  }
+}
+@keyframes engineStart {
+  0% {
+    /* Initial crank - big shake */
+    transform: translate(-50%, 0) rotate(0deg) scale(1);
+  }
+  10% {
+    /* Crank shake */
+    transform: translate(-50%, 0) rotate(2deg) scale(1.02);
+  }
+  20% {
+    /* Crank shake other way */
+    transform: translate(-50%, 0) rotate(-2deg) scale(0.98);
+  }
+  30% {
+    /* Another crank */
+    transform: translate(-50%, 0) rotate(1.5deg) scale(1.01);
+  }
+  50% {
+    /* Engine catches - settles down */
+    transform: translate(-50%, 0) rotate(-0.5deg) scale(0.99);
+  }
+  70%, 100% {
+    /* Engine idling - tiny, fast vibration */
+    transform: translate(-50%, 0) rotate(0.5deg) scale(1);
+  }
+}
+/* 1. Initial state: All letters are invisible and shrunk */
+
+
+/* 3. The Doodlish Pop Keyframes */
+@keyframes doodlePop {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-20deg);
+    /* Gives it a bit of a scribbled color effect */
+    color: #a0c4ff; 
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2) rotate(5deg); /* Overshoots slightly */
+    color: #a0c4ff;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg); /* Lands perfectly */
+    color: inherit; /* Returns to the original text color */
+  }
+}
+
+/* 4. THE MAGIC: Stagger the animation so they pop one by one! */
+/* Using manual nth-child for broad browser support */
+/* --- Word 1: めぐりめぐって (Total ~1.00s) --- */
+.hero__title .word:nth-child(1) .letter:nth-child(1) { animation-delay: 0.00s; }
+.hero__title .word:nth-child(1) .letter:nth-child(2) { animation-delay: 0.08s; }
+.hero__title .word:nth-child(1) .letter:nth-child(3) { animation-delay: 0.16s; }
+.hero__title .word:nth-child(1) .letter:nth-child(4) { animation-delay: 0.24s; }
+.hero__title .word:nth-child(1) .letter:nth-child(5) { animation-delay: 0.32s; }
+.hero__title .word:nth-child(1) .letter:nth-child(6) { animation-delay: 0.40s; }
+.hero__title .word:nth-child(1) .letter:nth-child(7) { animation-delay: 0.48s; }
+
+/* --- Word 2: 地域のしあわせに、 (Starts at 0.75s, Ends ~1.50s) --- */
+.hero__title .word:nth-child(2) .letter:nth-child(1) { animation-delay: 0.75s; }
+.hero__title .word:nth-child(2) .letter:nth-child(2) { animation-delay: 0.83s; }
+.hero__title .word:nth-child(2) .letter:nth-child(3) { animation-delay: 0.91s; }
+.hero__title .word:nth-child(2) .letter:nth-child(4) { animation-delay: 0.99s; }
+.hero__title .word:nth-child(2) .letter:nth-child(5) { animation-delay: 1.07s; }
+.hero__title .word:nth-child(2) .letter:nth-child(6) { animation-delay: 1.15s; }
+.hero__title .word:nth-child(2) .letter:nth-child(7) { animation-delay: 1.23s; }
+.hero__title .word:nth-child(2) .letter:nth-child(8) { animation-delay: 1.31s; }
+.hero__title .word:nth-child(2) .letter:nth-child(9) { animation-delay: 1.39s; }
+
+/* --- Word 3: つながる仕事。 (Starts at 1.65s, Ends EXACTLY at 3.40s) --- */
+.hero__title .word:nth-child(3) .letter:nth-child(1) { animation-delay: 1.65s; }
+.hero__title .word:nth-child(3) .letter:nth-child(2) { animation-delay: 1.90s; } /* Slight pause */
+.hero__title .word:nth-child(3) .letter:nth-child(3) { animation-delay: 1.98s; }
+.hero__title .word:nth-child(3) .letter:nth-child(4) { animation-delay: 2.06s; }
+.hero__title .word:nth-child(3) .letter:nth-child(5) { animation-delay: 2.14s; }
+.hero__title .word:nth-child(3) .letter:nth-child(6) { animation-delay: 3.00s; } /* Big pause before 仕事 */
+.hero__title .word:nth-child(3) .letter:nth-child(7) { animation-delay: 3.40s; } /* Punctuation at the very end */
+/* The continuous floating effect AFTER the reveal */
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
