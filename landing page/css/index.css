@@ -357,7 +357,7 @@ a:focus-visible, button:focus-visible {
    ======================================================== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -365,7 +365,6 @@ a:focus-visible, button:focus-visible {
 }
 .hero__photo {
   position: absolute;
-  margin-top:-300px;
   inset: 0;
   background-image: url("../assets/Links/_A717695.jpg");
   background-size: cover;
@@ -376,7 +375,6 @@ a:focus-visible, button:focus-visible {
 .hero__mountain {
   position: absolute;
   left: 0; right: 0; bottom: -1px;
-  margin-top:800px;
   height: clamp(90px, 16vw, 220px);
   background: var(--color-field);
   clip-path: polygon(0% 100%, 0% 55%, 18% 30%, 38% 58%, 52% 15%, 68% 48%, 84% 22%, 100% 50%, 100% 100%);
@@ -397,7 +395,8 @@ a:focus-visible, button:focus-visible {
   font-weight: 800;
   line-height: 1.3;
   color: var(--color-ink);
-  text-shadow: 0 2px 24px rgba(255, 255, 255, 0.85);
+  text-shadow: 0 5px 30px rgba(0, 0, 0, 0.85);
+  color: white;
 }
 .hero__title .letter {
   display: inline-block;
@@ -474,21 +473,39 @@ a:focus-visible, button:focus-visible {
   pointer-events: auto;
   display: grid;
   place-items: center;
+  gap: 0.2rem;
+  width: clamp(6.5rem, 16vw, 10.5rem);
   text-align: center;
-  border-radius: 999px;
-  padding: clamp(0.6rem, 1.6vw, 1rem) clamp(0.8rem, 2.4vw, 1.5rem);
+  border-radius: var(--radius-sm);
+  border: 2px solid #fff;
+  padding: clamp(0.55rem, 1.4vw, 0.9rem) clamp(0.7rem, 1.8vw, 1.2rem);
   font-weight: 800;
-  font-size: clamp(0.62rem, 1.4vw, 0.85rem);
-  line-height: 1.4;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  font-size: clamp(0.68rem, 1.3vw, 0.85rem);
+  line-height: 1.35;
+  box-shadow: 0 12px 26px rgba(34, 48, 63, 0.16);
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.6s var(--ease-out-smooth), transform 0.6s var(--ease-out-smooth), box-shadow var(--speed-fast) var(--ease-out-smooth);
 }
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  translate: -50% 0;
+  width: 18px;
+  height: 18px;
+  background: inherit;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-radius: 0 0 4px 0;
+  transform: rotate(45deg);
+  z-index: -1;
+}
 .bubble.is-visible { opacity: 1; transform: scale(1); }
-.bubble:hover { transform: scale(1.08); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18); }
+.bubble:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 18px 34px rgba(34, 48, 63, 0.22); }
 .bubble:active { transform: scale(1.02); }
-.bubble small { font-weight: 700; opacity: 0.8; }
+.bubble small { font-weight: 700; opacity: 0.75; display: block; margin-top: 0.15rem; }
 
 .bubble-blue { background: var(--color-water); color: var(--color-ink); }
 
@@ -499,7 +516,7 @@ a:focus-visible, button:focus-visible {
 .book {
   position: absolute;
   pointer-events: auto;
-  width: clamp(90px, 16vw, 240px);
+  width: clamp(60px, 11vw, 180px);
   text-align: center;
   opacity: 0;
   transform: translateY(24px);
@@ -530,17 +547,26 @@ a:focus-visible, button:focus-visible {
 
 /* Scale everything down gracefully on narrower screens instead of hiding it */
 @media (max-width: 720px) {
-  .bubble-left   { top: 38%; left: 4%; }
-  .bubble-center { top: 30%; left: 34%; }
-  .bubble-right  { top: 30%; right: 6%; }
-  .book-left  { left: 2%; }
-  .book-right { left: 34%; }
-  .hero__mountain{
-    padding-top:20px
+  .hero {
+    min-height: 78svh;
   }
-  .village{
-    margin-top:5px
+  .hero__content {
+    padding-bottom: clamp(3rem, 12vw, 5rem);
   }
+  .hero__mountain {
+    height: clamp(60px, 14vw, 110px);
+  }
+  .village {
+    margin-top: -60px;
+  }
+
+  .bubble-left   { top: 6%;  left: 3%; }
+  .bubble-center { top: 6%;  left: 50%; transform: translateX(-50%) scale(0.8); }
+  .bubble-center.is-visible { transform: translateX(-50%) scale(1); }
+  .bubble-right  { top: 20%; right: 3%; }
+
+  .book-left  { bottom: 4%; left: 2%; }
+  .book-right { bottom: 4%; left: auto; right: 2%; }
 }
 
 /* ========================================================
@@ -1087,49 +1113,10 @@ a:focus-visible, button:focus-visible {
     transform: none !important;
   }
 }
-@keyframes gentle-float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px); /* Adjust this pixel number to change how high it floats */
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-.bubble {
-  /* ... your existing bubble styles ... */
-  
-  /* ADD THIS LINE */
-  animation: gentle-float 4s ease-in-out infinite;
-}
-
-.book {
-  /* ... your existing book styles ... */
-  
-  /* ADD THIS LINE */
-  animation: gentle-float 5s ease-in-out infinite; /* 5s makes it move at a slightly different speed than bubbles */
-}
-@keyframes village-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* 2. Target elements ONLY after the script adds .is-visible */
-.bubble.is-visible {
-  opacity: 1;
-  transform: scale(1);
-  /* Triggers the floating animation smoothly AFTER revealing */
-  animation: village-float 4s ease-in-out infinite;
-}
-
-.book.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  /* Triggers a slightly slower float so it looks organic */
-  animation: village-float 5s ease-in-out infinite;
-}
+/* Note: bubble/book reveal + hover states are handled by the single
+   .bubble.is-visible / .book.is-visible rules defined earlier — keeping
+   only one source of truth here avoids the transform/animation fighting
+   that was making the bubbles jitter and lose their hover scale. */
 /* --- Animation 1: Smooth Up & Down Float --- */
 @keyframes villageFloat {
   0%, 100% { transform: translateY(0); }
