@@ -952,14 +952,14 @@ a:focus-visible, button:focus-visible {
 .section--recruit { position: relative; overflow: hidden; }
 .recruit__watermark {
   position: absolute;
-  top: 8%;
+  top: 0%;
   left: 0; right: 0;
   text-align: center;
-  font-size: clamp(2.4rem, 10vw, 8rem);
+  font-size: clamp(2.0rem, 7vw, 6rem);
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(233, 233, 233, 0.9);
   transform: rotate(-8deg);
-  z-index: 0;
+  z-index: 30;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -976,12 +976,60 @@ a:focus-visible, button:focus-visible {
   box-shadow: var(--shadow-soft);
   transition: transform var(--speed-medium) var(--ease-out-smooth);
 }
+.dogi{
+  position: relative;
+  width: 70px;
+  height: 70px;
+  left: 16rem;
+  top: 10rem;
+  animation: premiumFloat 6s ease-in-out infinite alternate;
+  will-change: transform;
+  transform-origin: bottom center;
+}
+.kidspray{
+  position: relative;
+  width: 70px;
+  height: 70px;
+  top: 11rem;
+  z-index: 7;
+  left:20rem;
+
+  /* Playful, organic micro-bounce animation */
+  animation: premiumBounce 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+  transform-origin: bottom right;
+  
+}
+
 .recruit__photo img:hover { transform: scale(1.02); }
 .recruit__title { font-size: clamp(1.4rem, 3.4vw, 2rem); font-weight: 800; margin: 0.5rem 0 0.75rem; }
 .recruit__lead { color: var(--color-muted); margin-bottom: 1.5rem; }
-
 @media (min-width: 720px) {
-  .recruit__inner { grid-template-columns: 0.9fr 1.1fr; }
+  .recruit__inner { 
+    grid-template-columns: 1.1fr 0.9fr; /* Gives more width to the text on the left, less to the asset photo on the right */
+  }
+  
+  /* You can clean up or adjust the dog image positioning here if it overflows on desktop */
+  .dogi {
+    position: absolute;
+    left: auto;
+    right: -2rem;
+    top: auto;
+    bottom: -3rem;
+    width: 8rem;
+    height: 8rem;
+  }
+  .kidspray {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+   /* Anchor it near the bottom edge of the photo container */
+  left: 64rem;     /* Anchor it near the left edge of the photo container */
+  z-index: 7;
+    animation: premiumBounce 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+  transform-origin: bottom right;
+}
 }
 
 /* ========================================================
@@ -1586,4 +1634,32 @@ a:focus-visible, button:focus-visible {
 @keyframes gentleFloat {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+/* Premium Floating Motion (Subtle, breathing fluid flow) */
+@keyframes premiumFloat {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg) scale(1.02);
+  }
+  100% {
+    transform: translateY(-3px) rotate(-1deg) scale(0.99);
+  }
+}
+
+/* Premium Character Bounce (Organic shifting weight & joy) */
+@keyframes premiumBounce {
+  0% {
+    transform: translateY(0) scaleX(1) scaleY(1) rotate(0deg);
+  }
+  35% {
+    transform: translateY(-4px) scaleX(1.01) scaleY(0.99) rotate(2deg);
+  }
+  70% {
+    transform: translateY(0) scaleX(0.99) scaleY(1.01) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(-6px) scaleX(1.02) scaleY(0.98) rotate(3deg);
+  }
 }
