@@ -1,7 +1,7 @@
 {
   "name": "client-project",
   "version": "1.0.0",
-  "description": "NISHIMATSU landing page",
+  "description": "MEGURILIFE landing page",
   "private": true,
   "scripts": {
     "test": "jest",

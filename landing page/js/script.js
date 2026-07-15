@@ -1,5 +1,5 @@
 /* ==========================================================
-   NISHIMATSU — script.js
+   MEGURILIFE — script.js
    Plain classic script (no ES modules) so it also runs fine
    when the file is opened directly via file:// during local
    testing, not just from a dev server. qs/qsa below replace
@@ -173,3 +173,15 @@ function initSite() {
 }
 
 document.addEventListener('DOMContentLoaded', initSite);
+
+/* ---- CommonJS exports for tests ---- */
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    initHamburgerMenu,
+    initScrollReveal,
+    initSmoothAnchors,
+    initHeaderScroll,
+    initServiceCarousel,
+    initSite,
+  };
+}
