@@ -1,105 +1,105 @@
 # client-project
+# client-project
 
-> MEGURILIFE ランディングページ — めぐりめぐって地域のしあわせに、つながる仕事。
+> **MEGURILIFE** — Corporate landing page for Megurilife Co., Ltd. A static Japanese-language site showcasing the company's waste management and collection services that support Miharu City's environmental infrastructure. Features custom illustrations, on-site photography, a service carousel, and scroll-reveal animations.
 
-クライアント：**株式会社 メグリライフ** — 美晴市の環境インフラを支える廃棄物処理・収集事業会社のコーポレートランディングページ。
+**Client:** Megurilife Co., Ltd. (株式会社メグリライフ) — Miharu City's environmental infrastructure company handling waste processing and collection.
 
-## 概要
+## Overview
 
-地域密着型の静的なウェブサイト。ごみ・廃棄物の適正処理を通じて地域の環境と暮らしを守るメグリライフの事業を、イラストと写真を交えて紹介する。
+A community-focused static website that introduces Megurilife's business of protecting the local environment through proper waste management, presented with original illustrations and on-site photography.
 
-## スタック
+## Stack
 
-| what | used |
+| Layer | Technology |
 |---|---|
-| マークアップ | HTML5 (静的) |
-| スタイル | CSS（カスタムプロパティ） |
-| 言語 | 日本語（`lang="ja"`） |
-| フォント | Montserrat（英字）+ Hiragino Sans / Noto Sans JP（和文）|
-| スクリプト | バニラJS — IntersectionObserver スクロールリビール、カルーセル、ハンバーガーメニュー |
-| テスト | Jest + jest-environment-jsdom |
-| デプロイ | Vercel（出力ディレクトリ: `landing page`）|
+| Markup | HTML5 (static) |
+| Styling | CSS (custom properties) |
+| Language | Japanese (`lang="ja"`) |
+| Fonts | Montserrat (Latin) + Hiragino Sans / Noto Sans JP (Japanese) |
+| Scripting | Vanilla JS — IntersectionObserver scroll-reveal, carousel, hamburger menu |
+| Testing | Jest + jest-environment-jsdom |
+| Deployment | Vercel (output dir: `landing page`) |
 
-## セクション
+## Sections
 
-| セクション | ID | 内容 |
+| Section | ID | Content |
 |---|---|---|
-| ヘッダー | — | 固定ナビゲーション、モバイルハンバーガーメニュー |
-| ヒーロー | `#top` | アニメーションタイトル「めぐりめぐって地域のしあわせに、つながる仕事。」 |
-| まちのイラスト | `#map` | 美晴市の村イラスト＋吹き出しリンク（ごみと資源ずかん、おしごとずかん）|
-| リバーバンド | — | ビデオ風バナー（橋を渡るバキューム車）|
-| ステートメント | `#statement` | 会社紹介テキスト＋現場写真 |
-| シーバンド | — | 海のイラストアセット（フェリー、イルカ、エビ）|
-| 事業紹介 | `#service` | カルーセル形式（4事業：粗大ごみ回収、環境インフラ維持、浄化槽管理、産業廃棄物回収）|
-| 採用情報 | `#recruit` | 採用告知＋写真 |
-| お知らせ | `#blog` | ブログカード一覧 |
-| ギャラリー | — | 現場写真グリッド |
-| フッター | `#footer` | 住所、電話番号、フッターナビ |
+| Header | — | Fixed navigation, mobile hamburger menu |
+| Hero | `#top` | Animated title: "めぐりめぐって地域のしあわせに、つながる仕事。" |
+| Town Illustration | `#map` | Miharu City village illustration + speech bubble links (waste & resource guide, job guide) |
+| River Band | — | Video-style banner (vacuum truck crossing a bridge) |
+| Statement | `#statement` | Company intro text + on-site photos |
+| Sea Band | — | Ocean illustration assets (ferry, dolphins, shrimp) |
+| Services | `#service` | Carousel (4 services: bulky waste collection, environmental infrastructure, septic tank management, industrial waste collection) |
+| Recruitment | `#recruit` | Hiring info + photos |
+| News | `#blog` | Blog card list |
+| Gallery | — | On-site photo grid |
+| Footer | `#footer` | Address, phone number, footer nav |
 
-
-## 構造
+## Structure
 
 ```
 client-project/
-├── package.json              # プロジェクト設定（jest）
-├── vercel.json               # Vercel 出力ディレクトリ設定
+├── package.json              # Project config (Jest)
+├── vercel.json               # Vercel output dir config
 ├── .gitignore
 ├── landing page/
-│   ├── index.html            # メインページ
+│   ├── index.html            # Main page
 │   ├── css/
-│   │   └── index.css         # 全スタイル（カスタムプロパティ + セクションごと）
+│   │   └── index.css         # All styles (custom props + per-section)
 │   ├── js/
-│   │   ├── dom.js            # DOM ヘルパー（querySelector ラッパー）
-│   │   └── script.js         # 全機能（ハンバーガー、リビール、カルーセル、スクロール）
+│   │   ├── dom.js            # DOM helpers (querySelector wrappers)
+│   │   └── script.js         # All functionality (hamburger, reveal, carousel, scroll)
 │   └── assets/
 │       ├── Fonts/            # Montserrat-VariableFont_wght.ttf
-│       ├── illust/           # 村・海・キャラクターのイラスト PNG
-│       ├── Links/            # 現場写真・PSD デザインソース
-│       └── top_pc.png        # ヒーロー背景
+│       ├── illust/           # Town, sea, character illustrations (PNG)
+│       ├── Links/            # On-site photos & PSD design sources
+│       └── top_pc.png        # Hero background
 └── tests/
-    └── script.test.js        # Jest テスト（ハンバーガー、カルーセル、リビール、アンカー）
+    └── script.test.js        # Jest tests (hamburger, carousel, reveal, anchor)
 ```
 
-## カラーパレット
+## Color Palette
 
-CSS カスタムプロパティで一元管理：
+Managed via CSS custom properties:
 
-| 変数 | 値 | 用途 |
+| Variable | Value | Usage |
 |---|---|---|
-| `--color-primary` | `#4ec3f0` | アクセント（吹き出し・ボタン枠線） |
-| `--color-primary-deep` | `#2ea6db` | 濃い方のアクセント、フォーカスリング |
-| `--color-pink` | `#f2a0bf` | サブアクセント |
-| `--color-book-yellow` | `#f6d873` | ずかん本 |
-| `--color-bg` | `#fbf9f4` | ページ背景 |
-| `--color-field` | `#d3ecb4` | フィールド（緑） |
-| `--color-water` | `#bfe3f5` | 水色帯 |
-| `--color-ink` | `#2b3a3f` | 本文テキスト |
-| `--color-muted` | `#6a7780` | 補足テキスト |
+| `--color-primary` | `#4ec3f0` | Accent (speech bubbles, button borders) |
+| `--color-primary-deep` | `#2ea6db` | Darker accent, focus rings |
+| `--color-pink` | `#f2a0bf` | Sub-accent |
+| `--color-book-yellow` | `#f6d873` | Guide books |
+| `--color-bg` | `#fbf9f4` | Page background |
+| `--color-field` | `#d3ecb4` | Field green |
+| `--color-water` | `#bfe3f5` | Water blue bands |
+| `--color-ink` | `#2b3a3f` | Body text |
+| `--color-muted` | `#6a7780` | Secondary text |
 
-## 機能
+## Features
 
-- **スクロールリビール** — `[data-reveal]` 属性に IntersectionObserver でフェードイン
-- **サービスカルーセル** — 前後ナビゲーション、ループ、リサイズ対応
-- **ハンバーガーメニュー** — モバイル用、リンククリックで自動クローズ
-- **固定ヘッダー** — スクロール量に応じて `scrolled` クラスでスタイル変更
-- **スムーススクロール** — 内部アンカーリンクを `scrollIntoView` で処理
+- **Scroll Reveal** — `[data-reveal]` attribute fade-in via IntersectionObserver
+- **Service Carousel** — Previous/next navigation, looping, responsive
+- **Hamburger Menu** — Mobile menu, auto-closes on link click
+- **Fixed Header** — `scrolled` class toggled on scroll for styling
+- **Smooth Scroll** — Internal anchor links via `scrollIntoView`
 
-## 開発
+## Development
 
 ```bash
 npm install
-npm test              # Jest テスト実行
-npm run test:coverage # カバレッジレポート出力
+npm test              # Run Jest tests
+npm run test:coverage # Output coverage report
 ```
 
-テストは `tests/script.test.js` にあり、`landing page/js/script.js` から関数を直接 `require` してモジュール単位で検証する。
+Tests live in `tests/script.test.js`, which requires individual functions from `landing page/js/script.js` for module-level unit testing.
 
-Vercel に接続済み。`git push` のたびに `landing page/` ディレクトリが自動デプロイされる（`vercel.json` で設定）。
+Connected to Vercel. Pushing to `git push` auto-deploys the `landing page/` directory (configured in `vercel.json`).
 
-## 備考
+## Notes
 
-- html の `lang="ja"` 設定、日本語コンテンツ
-- 全イラスト元データは `assets/Links/photoshop files/` に .psd で保存
-- ヒーローのタイトルは1文字ずつ `<span class="letter">` でマークアップ済み
-- 電話番号：0957-99-9999
-- 所在地：緑川県美晴市青葉町108番地1
+- HTML has `lang="ja"`, all content is in Japanese
+- All illustration source files (.psd) are in `assets/Links/photoshop files/`
+- Hero title is pre-marked up with one `<span class="letter">` per character
+- Phone: 0957-99-9999
+- Address: 108-1 Aoba-cho, Miharu-shi, Midorikawa-ken
